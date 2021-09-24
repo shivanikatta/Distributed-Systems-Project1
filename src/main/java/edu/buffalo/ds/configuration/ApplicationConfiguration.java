@@ -1,4 +1,4 @@
-package com.ds.buffalo.configuration;
+package edu.buffalo.ds.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

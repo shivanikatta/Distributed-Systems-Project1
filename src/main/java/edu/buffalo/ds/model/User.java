@@ -1,4 +1,4 @@
-package com.ds.buffalo.model;
+package edu.buffalo.ds.model;
 
 import lombok.Data;
 

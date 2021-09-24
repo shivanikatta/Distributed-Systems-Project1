@@ -1,8 +1,8 @@
-package com.ds.buffalo;
+package edu.buffalo.ds;
 
 
-import com.ds.buffalo.configuration.ApplicationConfiguration;
-import com.ds.buffalo.resources.ForexResource;
+import edu.buffalo.ds.configuration.ApplicationConfiguration;
+import edu.buffalo.ds.resources.ForexResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 

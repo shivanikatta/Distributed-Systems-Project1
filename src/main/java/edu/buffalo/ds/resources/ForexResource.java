@@ -1,4 +1,4 @@
-package com.ds.buffalo.resources;
+package edu.buffalo.ds.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
