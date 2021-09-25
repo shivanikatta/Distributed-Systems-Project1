@@ -1,34 +1,26 @@
 package edu.buffalo.ds.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.buffalo.ds.database.MongoDBConnection;
 import io.dropwizard.Configuration;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ApplicationConfiguration extends Configuration {
-    @NotEmpty
-    private String template;
 
-    @NotEmpty
-    private String defaultName = "Stranger";
+    @NotNull
+    private MongoDBConnection mongoDBConnection;
 
     @JsonProperty
-    public String getTemplate() {
-        return template;
+    public MongoDBConnection getMongoDBConnection()
+    {
+        return mongoDBConnection;
+    }
+    @JsonProperty
+    public void setMongoDBConnection(MongoDBConnection mongoDBConnection)
+    {
+        this.mongoDBConnection = mongoDBConnection;
     }
 
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
-    }
 }

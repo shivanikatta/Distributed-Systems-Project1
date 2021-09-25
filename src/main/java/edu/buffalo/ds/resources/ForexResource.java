@@ -1,31 +1,48 @@
 package edu.buffalo.ds.resources;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import edu.buffalo.ds.models.User;
+import edu.buffalo.ds.service.UserInfoService;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/hello-world")
+@Path("/v1")
 @Produces(MediaType.APPLICATION_JSON)
 public class ForexResource {
 
-    private String defaultName;
-    private final AtomicLong counter;
-    public ForexResource(String defaultName)
+    private final UserInfoService userInfoService;
+    public ForexResource(UserInfoService userInfoService)
     {
-        this.defaultName = defaultName;
-        this.counter = new AtomicLong();
+
+        this.userInfoService = userInfoService;
     }
 
     @GET
+    @Path("/hello")
     public String sayHello(@QueryParam("name") Optional<String> name)
 
     {
-        final String value = name.orElse(defaultName);
-        return value;
+        return "Hello World";
     }
+
+    @GET
+    @Path("/get-all")
+    public Response getAllUsers()
+    {
+        return Response.ok().entity(userInfoService.getAllUsers()).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/save-user")
+    public Response saveUser(User user)
+    {
+        return Response.ok().entity(userInfoService.saveUser(user)).build();
+    }
+
 
 }

@@ -7,12 +7,14 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
+@Slf4j
 public class MongoDBFactoryConnection {
     private MongoDBConnection mongoDBConnection;
 
@@ -28,6 +30,7 @@ public class MongoDBFactoryConnection {
     private List<ServerAddress> getServers()
     {
         final List<Seed> seeds = mongoDBConnection.getSeeds();
+        log.info(seeds.toString());
         return seeds.stream()
                 .map(seed -> new ServerAddress(seed.getHost(), Integer.parseInt(seed.getPort())))
                 .collect(Collectors.toList());
