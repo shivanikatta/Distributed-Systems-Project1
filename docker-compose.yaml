@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017" #port mapping
+    networks:
+      - dropw-mongodb-ntw
+
+  dropwizard-ms:
+    image: openjdk:11
+    container_name: dropwizard-ms
+    volumes:
+      - ./target/ds-project1-1.0-SNAPSHOT.jar:/microservice/ds-project1-1.0-SNAPSHOT.jar
+      - ./src/config/config.yml:/microservice/config.yml
+    working_dir: /microservice
+    command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
+    ports:
+      - "8090:8080"
+      - "8091:8081"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - mongodb
+
+
+networks:
+  dropw-mongodb-ntw:
+    name: dropw-mongodb-ntw
+
