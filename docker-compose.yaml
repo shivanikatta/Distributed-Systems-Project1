@@ -11,7 +11,7 @@ services:
       - "27017:27017" #port mapping
     networks:
       - dropw-mongodb-ntw
-  nginx:
+  ui-server:
     image: ui-server:v1
     container_name: nginx-server
     restart: always
@@ -21,9 +21,9 @@ services:
     networks:
       - dropw-mongodb-ntw
 
-  dropwizard-ms:
-    image: drowizard-img:v1
-    container_name: dropwizard-ms
+  dropwizard-img:
+    image: dropwizard-img:v1
+    container_name: dropwizard-img
 #    working_dir: /app
     command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
     ports:
