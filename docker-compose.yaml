@@ -21,10 +21,9 @@ services:
     networks:
       - dropw-mongodb-ntw
 
-  dropwizard-img:
+  dropwizard-server:
     image: dropwizard-img:v1
-    container_name: dropwizard-img
-#    working_dir: /app
+    container_name: dropwizard-ms
     command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
     ports:
       - "8090:8080"
