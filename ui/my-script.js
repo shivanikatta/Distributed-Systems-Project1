@@ -1,7 +1,9 @@
 function myFunction(){
 // api url
-const api_url =
-	"http://localhost:8090/v1/get-all";
+    var host = window.location.hostname;
+    console.log(host);
+    const api_url =
+        "http://" + host + ":8090/v1/get-all";
 
 // Defining async function
 async function getapi(url) {
@@ -66,8 +68,11 @@ function saveData2(){
    var countr = document.getElementById("country").value;
    console.log(countr);
 
+    var host = window.location.hostname;
+    console.log(host);
+    var apiUrl = "http://" + host + ":8090/v1/save-user"
  var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://localhost:8090/v1/save-user",true);
+    xhttp.open("POST", apiUrl,true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     var input = JSON.stringify({
           "firstName": firstna,
