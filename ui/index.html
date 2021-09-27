@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ds project 1 phase 1</title>
+    <style>
+        fieldset {
+          background-color: #eeeeee;
+        }
+
+        legend {
+          background-color: gray;
+          color: <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Ds project 1 phase 1</title>
+            <style>
+        fieldset {
+          background-color: #eeeeee;
+        }
+
+        legend {
+          background-color: gray;
+          color: white;
+          padding: 5px 10px;
+        }
+
+        input {
+          margin: 5px;
+        }
+</style>
+
+    <script src="my-script.js"></script>
+
+</head>
+<body>
+
+
+<form  id="detail" >
+    <fieldset>
+        <legend>Details</legend>
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" required><br><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname" required><br><br>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required><br><br>
+        <input type="submit" value="Submit" > <br><br>
+
+
+    </fieldset>
+</form>
+
+<button onclick="myFunction()">View</button>
+
+<table id="employees"></table>
+<script>
+const myForm = document.getElementById("detail")
+
+myForm.addEventListener("submit", (e) => {
+e.preventDefault();
+alert("Filled details");
+});
+
+</script>
+
+</body>
