@@ -13,12 +13,9 @@ services:
       - dropw-mongodb-ntw
 
   dropwizard-ms:
-    image: openjdk:11
+    image: drowizard-img:v1
     container_name: dropwizard-ms
-    volumes:
-      - ./target/ds-project1-1.0-SNAPSHOT.jar:/microservice/ds-project1-1.0-SNAPSHOT.jar
-      - ./src/config/config.yml:/microservice/config.yml
-    working_dir: /microservice
+#    working_dir: /app
     command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
     ports:
       - "8090:8080"
