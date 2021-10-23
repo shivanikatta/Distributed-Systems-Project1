@@ -20,7 +20,8 @@ public class TopicService {
         Boolean topicStatus =  topicDAO.refreshTopic(topicName, rate);
         log.info("Topic Refresh status : {}", topicStatus);
         if(Boolean.TRUE.equals(topicStatus)) {
-            subscriberDAO.changeStatus(topicName);
+            subscriberDAO.changeStatusTrue(topicName);
+            subscriberDAO.changeRate(topicName, rate);
             return true;
         }
         else

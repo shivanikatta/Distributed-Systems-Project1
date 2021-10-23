@@ -37,6 +37,7 @@ public class SubscriberDAO {
 
     public List<Subscriber> getSubscriberWithId(String subscriberId)
     {
+        log.info("Finding subs with id : {}", subscriberId);
         final MongoCursor<Document> subscribers =
                 subscriberCollection.find(Filters.eq("id", subscriberId)).iterator();
 
@@ -65,8 +66,9 @@ public class SubscriberDAO {
     {
         List<Subscriber> result = getSubscriberWithId(subscriberId);
 
+        log.info("Result of Sub : {}", result.size());
         // Result cannot be more than one
-        if(result.size() == 1)
+        if(!result.isEmpty())
         {
             Subscriber temp = result.get(0);
             log.info("Found 1 subscriber : {}", temp);
@@ -149,15 +151,35 @@ public class SubscriberDAO {
 
     }
 
-    public void changeStatus(String topicName) {
-        Bson update = Updates.set("topics.$[i].isChange", "true");
-        Bson filter1 = Filters.eq("i.name", topicName );
-        UpdateOptions updateOptions = new UpdateOptions().arrayFilters(List.of(filter1));
-        UpdateResult res = subscriberCollection.updateOne(new BsonDocument(new ArrayList<>()), update, updateOptions);
+    public void changeStatusTrue(String topicName) {
+        log.info("Changing status for all subs having topic name : {}", topicName);
+        Bson update = Updates.set(IS_CHANGE, Boolean.TRUE);
+        //Bson filter1 = Filters.eq("topics.name", topicName);
+       // Bson filter2 = Filters.eq("topic.subscribed", "true" );
+       // UpdateOptions updateOptions = new UpdateOptions().arrayFilters(List.of(filter1));
+        UpdateResult res = subscriberCollection.updateMany(Filters.eq("topics.name", topicName ), update);
         log.info("Update Result : {} ", res);
     }
 
     public void appendTopic(Topic topic) {
         subscriberCollection.updateMany(new Document(), Updates.push(TOPICS, topic) );
+    }
+
+    public void unsubscribeToTopic(String subscriberId, String topicName) {
+
+        Bson update = Updates.set("topics.$[j].subscribed", "false");
+        Bson filter2 = Filters.eq("j.name", topicName);
+        UpdateOptions updateOptions = new UpdateOptions().arrayFilters(Arrays.asList(filter2));
+        UpdateResult res = subscriberCollection.updateOne(Filters.eq("id", subscriberId ), update, updateOptions);
+        log.info("Update Result : {} ", res);
+    }
+
+    public void changeRate(String topicName, String rate) {
+        Bson update = Updates.set("topics.$[j].message", rate);
+        Bson filter2 = Filters.eq("j.name", topicName);
+        //Bson filter1 = Filters.eq("j.subscribed", "true");
+        UpdateOptions updateOptions = new UpdateOptions().arrayFilters(Arrays.asList( filter2));
+        UpdateResult res = subscriberCollection.updateMany(new Document(), update, updateOptions);
+        log.info("Update Result : {} ", res);
     }
 }

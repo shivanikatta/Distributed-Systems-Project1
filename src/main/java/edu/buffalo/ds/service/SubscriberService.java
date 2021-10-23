@@ -24,10 +24,11 @@ public class SubscriberService {
 
         if(optionalSubscriber.isPresent())
         {
+            log.info("Found one Subs");
             return  optionalSubscriber.get();
 
         }
-
+        log.info("Didn't find any subs");
         List<Topic> allTopics = topicDAO.getAllTopics();
         List<Topic> topicList = new ArrayList<>();
 
@@ -71,6 +72,23 @@ public class SubscriberService {
         newTopic.setSubscribed(Boolean.FALSE.toString());
         subscriberDAO.appendTopic(newTopic);
         subscriberDAO.makeAllChangeTrue();
+        return Boolean.TRUE;
+    }
+
+    public Boolean unsubscribeToTopic(String subscriberId, String topicName) {
+        List<Subscriber> subscribers = subscriberDAO.getSubscriberWithId(subscriberId);
+        if(subscribers.size() != 1)
+        {
+            log.error("Subscriber not found with Id : {}", subscriberId);
+            return Boolean.FALSE;
+        }
+        Optional<Topic> optionalTopic = topicDAO.getTopicUsingName(topicName);
+        if(optionalTopic.isEmpty())
+        {
+            log.error("Topic not found with Name : {}", topicName);
+            return Boolean.FALSE;
+        }
+        subscriberDAO.unsubscribeToTopic(subscriberId, topicName);
         return Boolean.TRUE;
     }
 }

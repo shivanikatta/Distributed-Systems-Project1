@@ -115,4 +115,20 @@ public class ForexResource {
 
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/unsubscribe")
+    public Response unsubscribeTopic(SubscribeRequest subscribeRequest)
+    {
+        Boolean result = subscriberService.unsubscribeToTopic(subscribeRequest.getSubscriberId()
+                , subscribeRequest.getTopicName());
+        if(result.equals(Boolean.FALSE))
+        {
+            return Response.status(400,"Bad Subscriber Id or Topic Id").build();
+        }
+        return Response.ok().entity("SUCCESS").build();
+
+    }
+
 }
