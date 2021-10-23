@@ -11,19 +11,10 @@ services:
       - "27017:27017" #port mapping
     networks:
       - dropw-mongodb-ntw
-  ui-server:
-    image: ui-server:latest
-    container_name: nginx-server
-    restart: always
-    ports:
-      - "8080:80"
-      - "443:443"
-    networks:
-      - dropw-mongodb-ntw
 
   dropwizard-server:
     image: dropwizard-server:latest
-    container_name: dropwizard-ms
+    container_name: dropwizard-broker
     command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
     ports:
       - "8090:8080"
@@ -32,6 +23,18 @@ services:
       - dropw-mongodb-ntw
     depends_on:
       - mongodb
+
+  dropwizard-publisher:
+    image: dropwizard-publisher:latest
+    container_name: dropwizard-publisher
+    command: [ "java", "-jar", "publisher-1.0-SNAPSHOT.jar", "server", "config.yml" ]
+    ports:
+      - "8070:8070"
+      - "8071:8071"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - dropwizard-server
 
 
 networks:
