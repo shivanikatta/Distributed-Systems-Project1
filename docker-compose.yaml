@@ -12,7 +12,7 @@ services:
     networks:
       - dropw-mongodb-ntw
   ui-server:
-    image: ui-server:v1
+    image: ui-server:latest
     container_name: nginx-server
     restart: always
     ports:
@@ -22,7 +22,7 @@ services:
       - dropw-mongodb-ntw
 
   dropwizard-server:
-    image: dropwizard-img:v1
+    image: dropwizard-server:latest
     container_name: dropwizard-ms
     command: ["java", "-jar", "ds-project1-1.0-SNAPSHOT.jar", "server", "config.yml"]
     ports:

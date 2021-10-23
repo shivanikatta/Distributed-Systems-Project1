@@ -8,9 +8,14 @@ import com.mongodb.client.MongoClients;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 @Getter
 @AllArgsConstructor
@@ -22,8 +27,11 @@ public class MongoDBFactoryConnection {
     {
         MongoCredential mongoCredential = MongoCredential.createCredential(mongoDBConnection.getUsername(),
                 mongoDBConnection.getDatabase(), mongoDBConnection.getPassword().toCharArray());
+        CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
+        CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
         return MongoClients.create(MongoClientSettings.builder()
                 .credential(mongoCredential)
+                .codecRegistry(codecRegistry)
                 .applyToClusterSettings(builder -> builder.hosts(getServers())).build());
     }
 
