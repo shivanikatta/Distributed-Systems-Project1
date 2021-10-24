@@ -36,6 +36,50 @@ services:
     depends_on:
       - dropwizard-server
 
+  react-subscriber1:
+    image: subscriber1:latest
+    container_name: sub1
+    command: [ "npm" , "start"]
+    ports:
+      - "3011:3000"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - dropwizard-server
+
+  react-subscriber2:
+    image: subscriber2:latest
+    container_name: sub2
+    command: [ "npm" , "start" ]
+    ports:
+      - "3012:3000"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - react-subscriber1
+
+  react-subscriber3:
+    image: subscriber3:latest
+    container_name: sub3
+    command: [ "npm" , "start" ]
+    ports:
+      - "3013:3000"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - react-subscriber2
+
+  react-publisher:
+    image: publisher1:latest
+    container_name: pub1
+    command: [ "npm" , "start" ]
+    ports:
+      - "4000:3000"
+    networks:
+      - dropw-mongodb-ntw
+    depends_on:
+      - dropwizard-server
+
 
 networks:
   dropw-mongodb-ntw:
