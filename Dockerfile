@@ -1,8 +1,6 @@
 FROM node:latest
 
-
-
-WORKDIR /Publisher
+WORKDIR /Subscriber
 
 COPY package*.json ./
 
