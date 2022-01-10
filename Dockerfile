@@ -1,5 +1,15 @@
-FROM openjdk:11 as dropwizard-img
-RUN mkdir -p app
-COPY ./target/ds-project1-1.0-SNAPSHOT.jar /app
-COPY ./src/config/config.yml /app
-WORKDIR /app
+FROM node:latest
+
+
+
+WORKDIR /Publisher
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+ENV PORT = 3000
+EXPOSE  3000
+
+CMD [ "npm" , "start"]
